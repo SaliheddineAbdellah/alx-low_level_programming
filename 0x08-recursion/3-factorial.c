@@ -8,7 +8,7 @@ int factorial(int n)
 {
 	int resultfactorial = 1;
 
-	if( n < 0)
+	if (n < 0)
 	{
 		return (-1);
 	}
