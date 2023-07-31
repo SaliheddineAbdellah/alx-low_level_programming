@@ -6,7 +6,6 @@
  * @h: linked list to be printed
  * Return: list of elements
  */
-
 size_t print_listint(const listint_t *h)
 {
 	size_t count = 0;
