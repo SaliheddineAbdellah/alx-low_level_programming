@@ -10,7 +10,8 @@ void print_binary(unsigned long int n)
 	int bit;
 	int firstsetbit = 0;
 
-
+	if (n == 0)
+		_putchar('0');
 	for (i = 63; i >= 0; i--)
 	{
 		bit = (n >> i) & 1;
