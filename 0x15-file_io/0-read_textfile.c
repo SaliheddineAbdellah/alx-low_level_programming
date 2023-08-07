@@ -3,7 +3,7 @@
 
 /**
  * read_textfile - reads a text file and prints it to the POSIX std output
- * @filname: pointer to filename
+ * @filename: pointer to filename
  * @letters: number of letters to read and print
  * Return: number of bytes read and printed
  * or 0 when failure or filename is NULL
