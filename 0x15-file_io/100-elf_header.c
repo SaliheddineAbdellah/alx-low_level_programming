@@ -27,6 +27,14 @@ typedef struct Elf64_Ehdr
 	uint16_t e_shstrndx;
 } Elf64_Ehdr;
 
+const char *elf_type_strings[] = {
+	[0] = "NONE",
+	[1] = "REL",
+	[2] = "EXEC",
+	[3] = "DYN",
+	[4] = "CORE",
+};
+
 void display_elf_header(const char *filename)
 {
 	int fd;
@@ -69,7 +77,8 @@ void display_elf_header(const char *filename)
 	printf("  OS/ABI:                            %s\n",
 	       header.e_ident[7] == 0 ? "UNIX - System V" : "Unknown");
 	printf("  ABI Version:                       %u\n", header.e_ident[8]);
-	printf("  Type:                              %u\n", header.e_type);
+	printf("  Type:                              %s\n",
+	       header.e_type <= 4 ? elf_type_strings[header.e_type] : "Unknown");
 	printf("  Entry point address:               0x%lx\n", header.e_entry);
 
 	close(fd);
