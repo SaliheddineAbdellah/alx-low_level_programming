@@ -7,28 +7,11 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-#define ELF_MAGIC "\x7F\x45\x4C\x46" // ELF magic number
+#define ELF_MAGIC "\x7F\x45\x4C\x46" /* ELF magic number */
 
-/**
- * struct Elf64_Ehdr - ELF header structure
- * @e_ident:   ELF identification bytes
- * @e_type:    Object file type
- * @e_machine: Machine architecture
- * @e_version: ELF version
- * @e_entry:   Entry point virtual address
- * @e_phoff:   Program header table file offset
- * @e_shoff:   Section header table file offset
- * @e_flags:   Processor-specific flags
- * @e_ehsize:  ELF header size
- * @e_phentsize: Size of program header entry
- * @e_phnum:   Number of program header entries
- * @e_shentsize: Size of section header entry
- * @e_shnum:   Number of section header entries
- * @e_shstrndx: Index of section header string table
- */
 typedef struct Elf64_Ehdr
 {
-	char e_ident[16];
+	unsigned char e_ident[16];
 	uint16_t e_type;
 	uint16_t e_machine;
 	uint32_t e_version;
@@ -44,20 +27,19 @@ typedef struct Elf64_Ehdr
 	uint16_t e_shstrndx;
 } Elf64_Ehdr;
 
-/**
- * display_elf_header - Display ELF header information
- * @filename: ELF file name
- */
 void display_elf_header(const char *filename)
 {
-	int fd = open(filename, O_RDONLY);
+	int fd;
+	Elf64_Ehdr header;
+	int i;
+
+	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 	{
 		fprintf(stderr, "Error opening file: %s\n", filename);
 		exit(98);
 	}
 
-	Elf64_Ehdr header;
 	if (read(fd, &header, sizeof(header)) != sizeof(header))
 	{
 		fprintf(stderr, "Error reading ELF header from file: %s\n", filename);
@@ -74,7 +56,7 @@ void display_elf_header(const char *filename)
 
 	printf("ELF Header:\n");
 	printf("  Magic:   ");
-	for (int i = 0; i < 16; i++)
+	for (i = 0; i < 16; i++)
 	{
 		printf("%02x ", header.e_ident[i]);
 	}
@@ -93,12 +75,6 @@ void display_elf_header(const char *filename)
 	close(fd);
 }
 
-/**
- * main - Entry point of the program
- * @argc: Argument count
- * @argv: Array of command-line arguments
- * Return: Exit status
- */
 int main(int argc, char *argv[])
 {
 	if (argc != 2)
