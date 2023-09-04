@@ -35,9 +35,9 @@ void close_file(int pfile)
 	int x;
 
 	x = close(pfile);
-	if (x ==-1)
+	if (x == -1)
 	{
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd);
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", pfile);
 		exit(100);
 	}
 }
